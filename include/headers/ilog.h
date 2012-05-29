@@ -8,15 +8,18 @@
  */
 #pragma once
 #include <stdarg.h>
-#include <varargs.h>
 #include <stdio.h>
 #include <time.h>
 #include "iconfig.h"
 
 #ifdef _LOG
 #define LOG_INTERfACE virtual
+#define LOG_INIT \
+	log* log_file::_instance = 0;\
+	log* log_console::_instance = 0;
 #else
 #define LOG_INTERfACE
+#define LOG_INIT
 #endif
 
 
@@ -56,9 +59,7 @@ public:
     static log *_instance;
 };
 
-log* log_file::_instance = 0;
-
-log& log_file::instance()
+inline log& log_file::instance()
 {
     if (!_instance)
     {
@@ -68,7 +69,7 @@ log& log_file::instance()
     return *_instance;
 }
 
-log_file::log_file()
+inline log_file::log_file()
 {
     _file = fopen(FILE_LOG_NAME, "w+");
     if (!_file)
@@ -82,11 +83,11 @@ log_file::log_file()
         sprintf(fn, "%04d%02d%02d%02d%02d%02d.log", timeinfo->tm_year, \
                 timeinfo->tm_mon, timeinfo->tm_mday, timeinfo->tm_hour, \
                 timeinfo->tm_min, timeinfo->tm_sec);
-        _file = fopen(fn, "w");
+        _file = fopen(fn, "w+");
     }
 }
 
-log_file::~log_file()
+inline log_file::~log_file()
 {
     fclose(_file);
 }
@@ -118,8 +119,6 @@ public:
 public:
     static log *_instance;
 };
-
-log* log_console::_instance = 0;
 
 inline log& log_console::instance()
 {

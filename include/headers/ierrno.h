@@ -18,7 +18,7 @@
 #define return_perror(e) do {\
 	if (e) {\
 	set_errno(e);\
-	fprintf(stderr, "ERROR: %s (%d), %s\n", __FILE__, __LINE__, strerror(e));\
+	fprintf(stderr, "ERROR: %s:%s, %s(%d)\n", __FILE__, __FUNCTION__, strerror(e), e);\
 	}\
 	return (e);\
 	}while(0)
@@ -70,9 +70,3 @@
 //#define	ENOSYS		40	/* Function not implemented (88 in Cyg?) */
 //#define	ENOTEMPTY	41	/* Directory not empty (90 in Cyg?) */
 
-#define IEBUSY	  1
-#define IERROR   -1
-#define IEDEVICE -2   /* */
-#define IESOCKET -3
-#define IESEND   -4
-#define IEREAD   -5

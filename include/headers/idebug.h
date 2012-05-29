@@ -45,7 +45,7 @@ LONG WINAPI MyUnhandledExceptionFilter(struct _EXCEPTION_POINTERS* ExceptionInfo
 
 #define ASSERTP(C, P) do {\
 	if ((P) >= ASSERT_LEVEL) {\
-        if (!C) fprintf(stderr, "ASSERT: %s (%d) %s\n", __FILE__, __LINE__, #C);\
+        if (!C) fprintf(stderr, "ASSERT: %s:%d %s\n", __FILE__, __LINE__, #C);\
     }} while(0)
 #else
 #define ASSERTP(C, P) 0
@@ -55,7 +55,7 @@ LONG WINAPI MyUnhandledExceptionFilter(struct _EXCEPTION_POINTERS* ExceptionInfo
 #define CHECK(LINE, C) do {\
     int _r = LINE;\
     if (_r != C) {\
-        fprintf(stderr, "%s(%d):%s return %d\n", __FILE__, __LINE__, #LINE, _r);\
+        fprintf(stderr, "%s:%d %s return %d\n", __FILE__, __LINE__, #LINE, _r);\
         fflush(stderr);\
     }} while(0)
 #else
@@ -69,7 +69,7 @@ LONG WINAPI MyUnhandledExceptionFilter(struct _EXCEPTION_POINTERS* ExceptionInfo
 #endif
 
 #ifdef ENABLE_TRACE
-#define CODE_TRACE log_console::instance().printf("TRACE: %s (%d)\n", __FILE__, __LINE__);
+#define CODE_TRACE log_console::instance().printf("TRACE: %s:%d\n", __FILE__, __LINE__);
 #else
 #define CODE_TRACE 
 #endif

@@ -1,0 +1,6 @@
+#include "iheader.h"
+
+DECLARE_MINIDUMP
+REGIST_MINIDUMP
+
+LOG_INTERfACE
