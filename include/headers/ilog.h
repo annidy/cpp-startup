@@ -24,6 +24,8 @@
 
 
 // -------------------------------------------------------------------------------------------
+#ifdef __cplusplus
+
 class log 
 {
 public:
@@ -144,3 +146,5 @@ inline void log_console::dump(const char *buffer, size_t size)
     fwrite(buffer, 1, size, stderr);
     fflush(stderr);
 }
+
+#endif // #ifdef __cplusplus
