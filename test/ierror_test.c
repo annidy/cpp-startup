@@ -1,12 +1,18 @@
+#include <stdio.h>
 #include "iheader.h"
+
 
 int test(int i)
 {
-	printf("return %d\n", i+i);
-	return_perror(i);
+	printf("test %d\n", i);
+	return_perror(i+1);
+	return 0;
 }
 
 int main()
 {
-	test(0);
+	printf(TO_STRING(return_perror(1)));
+	test(3);
+	printf("Now, the errno = %d\n", errno);
+	return 0;
 }

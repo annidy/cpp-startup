@@ -4,7 +4,7 @@ OBJ_DIR := $(MAKEROOT)/obj
 
 CFLAGS := -I $(MAKEROOT)/include -std=gnu99
 
-CPP := gcc
+CPP := g++
 CC := gcc
 
 %.o : %.c
@@ -15,8 +15,13 @@ CC := gcc
 
 .PHONY : all
 
-all : ierror_test
+all : idebug_test
 
 ierror_test : test/ierror_test.o
 	$(CC) -o $(MAKEROOT)/obj/$@ $(MAKEROOT)/obj/$<
 
+idebug_test : test/idebug_test.o
+	$(CC) -o $(MAKEROOT)/obj/$@ $(MAKEROOT)/obj/$<
+
+clean :
+	rm obj/test/*.o

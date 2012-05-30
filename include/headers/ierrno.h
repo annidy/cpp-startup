@@ -1,6 +1,8 @@
 #pragma once
 #include <stdio.h>
+#include <stdlib.h>
 #include <errno.h>
+#include <string.h>
 
 /*
  * Simple bit operation macros. NOTE: These are NOT atomic.
@@ -9,7 +11,7 @@
 #define set_bit(bit, var)	      ((var) |= (1 << (bit)))
 #define clear_bit(bit, var)	      ((var) &= ~(1 << (bit)))
 
-#ifdef WIN32
+#ifdef _MSC_VER
 #define set_error(e)	_set_errno(e)
 #else
 #define set_error(e)	errno = (e)
@@ -18,11 +20,12 @@
 #define return_error(e)	set_errno(e), return (e)
 #define return_perror(e) do {\
 	if (e) {\
-	set_errno(e);\
+	set_error(e);\
 	fprintf(stderr, "ERROR: %s:%s, %s(%d)\n", __FILE__, __FUNCTION__, strerror(e), e);\
 	}\
 	return (e);\
 	}while(0)
+
 
 
 #define		ENO         0

@@ -11,9 +11,11 @@
 #define _LOG 1
 #define FILE_LOG_NAME "log"
 
+#define ENABLE_ASSERT
+#define ENABLE_ASSERT
 #define ENABLE_TRACE
 #define ENABLE_ASSERT_LEVEL
 #define ENABLE_CHECK
-#define ENABLE_DUMP
+//#define ENABLE_DUMP
 
 #define ASSERT_LEVEL ASSERT_LEVEL_INFO

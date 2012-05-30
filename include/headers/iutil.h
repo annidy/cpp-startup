@@ -12,3 +12,7 @@
 /* Round up and down @num to 2 in power of @order. */
 #define ROUND_UP(num,order)	(((num) + ((1 << (order)) - 1)) & ~((1 << (order)) - 1))
 #define ROUND_DOWN(num,order) ((num) & ~((1 << (order)) - 1))
+
+/* expand the macro */
+#define TO_STRING(x) TO_STRING1(x)
+#define TO_STRING1(x) #x
