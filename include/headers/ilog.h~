@@ -143,6 +143,4 @@ inline void log_console::dump(const char *buffer, size_t size)
     fflush(stderr);
 }
 
-#else
-#pragma message IWARN("Log Need C++ Support")
 #endif // #ifdef __cplusplus
