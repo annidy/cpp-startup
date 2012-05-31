@@ -10,16 +10,12 @@
 #include <stdarg.h>
 #include <stdio.h>
 #include <time.h>
-#include "iconfig.h"
+#include "headers/iconfig.h"
 
 #ifdef _LOG
 #define LOG_INTERfACE virtual
-#define LOG_INIT \
-	log* log_file::_instance = 0;\
-	log* log_console::_instance = 0;
 #else
 #define LOG_INTERfACE
-#define LOG_INIT
 #endif
 
 

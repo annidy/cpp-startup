@@ -8,7 +8,7 @@
 */
 #pragma once
 
-#define _LOG 1
+#define _LOG
 #define FILE_LOG_NAME "log"
 
 #define ENABLE_ASSERT
@@ -19,3 +19,5 @@
 //#define ENABLE_DUMP
 
 #define ASSERT_LEVEL ASSERT_LEVEL_INFO
+
+#define LOG(...) log_console::instance().printf(__VA_ARGS__)
