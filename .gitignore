@@ -10,3 +10,7 @@
 *.lai
 *.la
 *.a
+
+# tmp file
+*~
+*.swp

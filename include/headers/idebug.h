@@ -57,15 +57,41 @@ LONG WINAPI MyUnhandledExceptionFilter(struct _EXCEPTION_POINTERS* ExceptionInfo
 #endif
 
 #ifdef ENABLE_CHECK
-#define CHECK(LINE, C) do {\
-    int _r = LINE;\
-    if (_r != C) {\
-        fprintf(stderr, "%s:%d %s return %d\n", __FILE__, __LINE__, #LINE, _r);\
-        fflush(stderr);\
-    }} while(0)
+#ifdef __cplusplus
+#include <sstream>
+template<typename T>
+inline T _check(T t, T c, char* FILE, long LINEN, char* LINE)
+{
+    if (t != c)
+	{
+		std::ostringstream ss;
+		ss << FILE << ":" << LINEN << " " << LINE << " return " << t << std::endl;
+		LOG(ss.str().c_str());
+	}
+	return t;
+}
+#define CHECK(LINE, C) _check((LINE), (C), __FILE__, __LINE__, #LINE)
+#else
+#ifdef _MSC_VER
+#pragma message ("*** CHECK Need C++ Support")
+#else
+#warning "*** CHECK Need C++ Support"
+#endif // _MSC_VER
+#define CHECK(LINE, C) LINE
+#endif // __cplusplus
 #else
 #define CHECK(LINE, C) LINE
-#endif
+#endif // ENABLE_CHECK
+/*
+#elif __GNUC__
+#define CHECK(LINE, C) \
+(__extension__  \
+({  \
+   typeof(C) __c=(LINE);   \
+   (__c==(C))?__c:(LOG("%s:%d %s return %d\n", __FILE__, __LINE__, #LINE, __c), __c));\
+}) \
+) 
+*/
 
 #if defined(DEBUG) || defined(_DEBUG)
 #define FOR_DEBUG(LINE) LINE
@@ -74,7 +100,7 @@ LONG WINAPI MyUnhandledExceptionFilter(struct _EXCEPTION_POINTERS* ExceptionInfo
 #endif
 
 #ifdef ENABLE_TRACE
-#define CODE_TRACE fprintf(stderr, "TRACE: %s:%d\n", __FILE__, __LINE__);
+#define CODE_TRACE LOG("TRACE: %s:%d\n", __FILE__, __LINE__);
 #else
 #define CODE_TRACE 
 #endif

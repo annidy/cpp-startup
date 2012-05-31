@@ -10,16 +10,12 @@
 #include <stdarg.h>
 #include <stdio.h>
 #include <time.h>
-#include "iconfig.h"
+#include "headers/iconfig.h"
 
 #ifdef _LOG
 #define LOG_INTERfACE virtual
-#define LOG_INIT \
-	log* log_file::_instance = 0;\
-	log* log_console::_instance = 0;
 #else
 #define LOG_INTERfACE
-#define LOG_INIT
 #endif
 
 
@@ -148,7 +144,9 @@ inline void log_console::dump(const char *buffer, size_t size)
 }
 
 #else
-#ifdef _LOG
-#warning "ilog.h need c++ complier support"
+#ifdef _MSC_VCR
+#pragma message ("Log Need C++ Support")
+#else
+#warning "Log Need C++ Support"
 #endif
 #endif // #ifdef __cplusplus
