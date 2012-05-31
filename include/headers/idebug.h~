@@ -74,7 +74,7 @@ LONG WINAPI MyUnhandledExceptionFilter(struct _EXCEPTION_POINTERS* ExceptionInfo
 #endif
 
 #ifdef ENABLE_TRACE
-#define CODE_TRACE fprintf(stderr, "TRACE: %s:%d\n", __FILE__, __LINE__);
+#define CODE_TRACE log_console::instance().printf("TRACE: %s:%d\n", __FILE__, __LINE__);
 #else
 #define CODE_TRACE 
 #endif

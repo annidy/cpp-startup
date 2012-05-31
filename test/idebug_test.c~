@@ -22,7 +22,7 @@ int main()
 	CHECK(do1(3), 2); // check failed
 
 	CODE_TRACE
-	//FOR_DEBUG(printf("only debug\n"));
+	FOR_DEBUG(printf("only debug\n"));
 	CODE_TRACE
 	return 0;
 }

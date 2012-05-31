@@ -147,8 +147,4 @@ inline void log_console::dump(const char *buffer, size_t size)
     fflush(stderr);
 }
 
-#else
-#ifdef _LOG
-#warning "ilog.h need c++ complier support"
-#endif
 #endif // #ifdef __cplusplus
