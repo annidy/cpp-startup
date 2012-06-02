@@ -144,5 +144,15 @@ inline void log_console::dump(const char *buffer, size_t size)
 }
 
 #else
-#pragma message IWARN("Log Need C++ Support")
+
+#if defined(_LOG) && defined(LOG)
+#ifdef _MSC_VER
+#pragma message ("*** LOG Need C++ Support")
+#else
+#warning "*** LOG Need C++ Support"
+#endif // _MSC_VER
+#undef LOG
+#define LOG(...) (void*)0
+#endif // defined(_LOG) && defined(LOG)
+
 #endif // #ifdef __cplusplus

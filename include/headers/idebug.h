@@ -33,8 +33,9 @@ LONG WINAPI MyUnhandledExceptionFilter(struct _EXCEPTION_POINTERS* ExceptionInfo
 #else
 #include <unistd.h>
 #include <stdio.h>
-#define ASSERT(C) ((!!((C))) || !fprintf(stderr, "ASSERT: %s:%d %s\n", \
-					__FILE__, __LINE__, #C) || kill(getpid(), SIGINT))
+#define ASSERT(C) ((!!((C))) || (LOG("ASSERT: %s:%d %s\n", \
+								__FILE__, __LINE__, #C), \
+								kill(getpid(), SIGINT)))
 #endif // WIN32
 #else
 #define ASSERT(C) 0
@@ -96,7 +97,7 @@ inline T _check(T t, T c, char* FILE, long LINEN, char* LINE)
 #if defined(DEBUG) || defined(_DEBUG)
 #define FOR_DEBUG(LINE) LINE
 #else
-#define FOR_DEBUG 0
+#define FOR_DEBUG(LINE) 0
 #endif
 
 #ifdef ENABLE_TRACE

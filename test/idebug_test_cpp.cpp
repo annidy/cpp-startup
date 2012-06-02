@@ -11,6 +11,7 @@ int main()
 	int i = 0;
 	printf("%s\n", TO_STRING(ASSERT(i == 1)));
 	ASSERT(i == 1);
+	/*
 	//ASSERT(i == 0);
 
 	printf("%s\n", TO_STRING(ASSERTP(i == 2, ASSERT_LEVEL_DEBUG)));
@@ -19,7 +20,6 @@ int main()
 	//ASSERTP(i == 4, ASSERT_LEVEL_CRITAL);
 	printf("DOne\n");
 	CHECK(t(), 2);
-
-	FOR_DEBUG(printf("For debug\n"));
+	*/
 	return 0;
 }
