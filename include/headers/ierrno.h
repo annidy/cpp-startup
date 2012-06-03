@@ -21,7 +21,7 @@
 #define return_perror(e) do {\
 	if (e) {\
 	set_error(e);\
-	fprintf(stderr, "ERROR: %s:%s, %s(%d)\n", __FILE__, __FUNCTION__, strerror(e), e);\
+	LOG("ERROR: %s:%s, %s(%d)\n", __FILE__, __FUNCTION__, strerror(e), e);\
 	}\
 	return (e);\
 	}while(0)

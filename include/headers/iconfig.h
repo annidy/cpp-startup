@@ -20,4 +20,5 @@
 
 #define ASSERT_LEVEL ASSERT_LEVEL_INFO
 
-#define LOG(...) log_console::instance().printf(__VA_ARGS__)
+#define LOG(...) (log_console::instance().printf(__VA_ARGS__),\
+				  log_file::instance().printf(__VA_ARGS__))
