@@ -71,8 +71,5 @@ int main()
 	printf("Now, the errno = %d\n", errno);
 	test3(3);
 	printf("Now, the errno = %d\n", errno);
-	i = 1111111111;
-	printf("%d\n", (short)i+1);
-	printf("%d\n",  << 32);
 	return 0;
 }

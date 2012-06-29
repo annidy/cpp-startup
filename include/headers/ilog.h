@@ -18,6 +18,11 @@
 #define LOG_INTERfACE
 #endif
 
+#ifdef FILE_LOG_TRUNC
+#define FILE_LOG_MODE "w+"
+#else
+#define FILE_LOG_MODE "a+"
+#endif
 
 // -------------------------------------------------------------------------------------------
 #ifdef __cplusplus
@@ -26,12 +31,15 @@ class log
 {
 public:
     static log& instance();
-    LOG_INTERfACE ~log() {};
     LOG_INTERfACE void printf(const char *format, ...) {}
     LOG_INTERfACE void dump(const char *buffer, size_t size) {}
 
-public:
+private:
     static log *_instance;
+
+protected:
+	log() {};
+    LOG_INTERfACE ~log() {};
 };
 
 #ifndef _LOG
@@ -46,15 +54,17 @@ inline log& log::instance()
 class log_file : log 
 {
 public:
-    log_file();
-    ~log_file();
-
     void printf(const char *format, ...);
     void dump(const char *buffer, size_t size);
     static log& instance();
 
+private:
     FILE *_file;
     static log_file *_instance;
+
+protected:
+    log_file();
+    LOG_INTERfACE ~log_file();
 };
 
 inline log& log_file::instance()
@@ -63,7 +73,7 @@ inline log& log_file::instance()
     {
         static log_file obj;
         _instance = &obj;
-    }
+    }	// FIXME: The dead reference problem, Modern C++ Design, P118
     return *_instance;
 }
 
@@ -81,7 +91,7 @@ inline log_file::log_file()
         sprintf(fn, "%04d%02d%02d%02d%02d%02d.log", timeinfo->tm_year, \
                 timeinfo->tm_mon, timeinfo->tm_mday, timeinfo->tm_hour, \
                 timeinfo->tm_min, timeinfo->tm_sec);
-        _file = fopen(fn, "w+");
+        _file = fopen(fn, FILE_LOG_MODE);
     }
 }
 
@@ -114,8 +124,12 @@ public:
     void dump(const char *buffer, size_t size);
     static log& instance();
 
-public:
+private:
     static log_console *_instance;
+
+protected:
+	log_console() {}
+	LOG_INTERfACE ~log_console() {}
 };
 
 inline log& log_console::instance()
