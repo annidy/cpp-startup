@@ -22,3 +22,21 @@
 #else  
 #define INT64_FORMAT    "ll"  
 #endif
+
+#ifdef __cplusplus
+#include <time.h>
+// there was a bug of __LINE__ in MSVC, see
+// http://bytes.com/topic/c/answers/692912-creating-unique-temporary-variables-using-__line__-other-macro
+template<long i>
+struct _UniqueClock_t {
+	static clock_t var;
+};
+template<long i>
+clock_t _UniqueClock_t<i>::var;
+
+#define EXEC(F) F
+#define TIME_IT(F) \
+	_UniqueClock_t<__LINE__>::var = clock();\
+	EXEC(F);\
+	LOG("Time "#F" = %dms\n", (clock()-_UniqueClock_t<__LINE__>::var)*1000/CLOCKS_PER_SEC);
+#endif // #ifdef __cplusplus

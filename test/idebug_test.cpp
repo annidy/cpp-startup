@@ -45,6 +45,7 @@ int main()
 	printf("%s\n", TO_STRING(LOG("idebug_test\n")));
 	//log_console::instance().printf("idebug_test\n");
 	LOG("This is test\n");
-	test_c();
+	TIME_IT(test_c());
+	TIME_IT(test_c());
 	return 0;
 }
