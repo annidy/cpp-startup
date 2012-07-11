@@ -47,5 +47,8 @@ int main()
 	LOG("This is test\n");
 	TIME_IT(test_c());
 	TIME_IT(test_c());
+	DLOG("Debug\n");
+	ILOG("Info\n");
+	ELOG("Error\n");
 	return 0;
 }
