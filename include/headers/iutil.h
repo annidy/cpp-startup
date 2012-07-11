@@ -39,4 +39,6 @@ clock_t _UniqueClock_t<i>::var;
 	_UniqueClock_t<__LINE__>::var = clock();\
 	EXEC(F);\
 	LOG("Time "#F" = %dms\n", (clock()-_UniqueClock_t<__LINE__>::var)*1000/CLOCKS_PER_SEC);
+#else
+#define TIME_IT(F) F
 #endif // #ifdef __cplusplus
