@@ -42,3 +42,11 @@ clock_t _UniqueClock_t<i>::var;
 #else
 #define TIME_IT(F) F
 #endif // #ifdef __cplusplus
+
+#define BREAK_CHECK(L, R)  if((R) != (L)) break;
+#define RETURN_CHECK(L, R) if((R) != (L)) return;
+#define RETURN_CHECK1(L, R, R1) if((R) != (L)) return (R1);
+
+#define BREAK_CHECK_NOT(L, R)  if((R) == (L)) break;
+#define RETURN_CHECK_NOT(L, R) if((R) == (L)) return;
+#define RETURN_CHECK_NOT1(L, R, R1) if((R) == (L)) return (R1);

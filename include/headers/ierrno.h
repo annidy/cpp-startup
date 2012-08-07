@@ -75,4 +75,3 @@
 //#define	ENOLCK		39	/* No locks available (46 in Cyg?) */
 //#define	ENOSYS		40	/* Function not implemented (88 in Cyg?) */
 //#define	ENOTEMPTY	41	/* Directory not empty (90 in Cyg?) */
-
