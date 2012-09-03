@@ -1,5 +1,5 @@
 #include "iheader.h"
-
+using namespace iheader;
 //DECLARE_MINIDUMP
 //REGIST_MINIDUMP
 

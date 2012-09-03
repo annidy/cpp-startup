@@ -10,7 +10,7 @@
 #include <stdarg.h>
 #include <stdio.h>
 #include <time.h>
-#include "headers/iconfig.h"
+#include "iconfig.h"
 
 #ifdef _LOG
 #define LOG_INTERfACE virtual
@@ -27,7 +27,10 @@
 // -------------------------------------------------------------------------------------------
 #ifdef __cplusplus
 
-class log 
+namespace iheader
+{
+    
+class log
 {
 public:
     static log& instance();
@@ -156,7 +159,8 @@ inline void log_console::dump(const char *buffer, size_t size)
     fwrite(buffer, 1, size, stderr);
     fflush(stderr);
 }
-
+    
+}      // namespace iheader
 #else
 
 #if defined(_LOG) && defined(LOG)
@@ -168,5 +172,4 @@ inline void log_console::dump(const char *buffer, size_t size)
 #undef LOG
 #define LOG(...) (void*)0
 #endif // defined(_LOG) && defined(LOG)
-
 #endif // #ifdef __cplusplus

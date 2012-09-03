@@ -23,8 +23,8 @@
 
 /////////////////////////////// Level Log ////////////////////////////////
 #if defined(_LOG)
-#define LOG(...) (log_console::instance().printf(__VA_ARGS__),\
-				  log_file::instance().printf(__VA_ARGS__))
+#define LOG(...) (iheader::log_console::instance().printf(__VA_ARGS__),\
+				  iheader::log_file::instance().printf(__VA_ARGS__))
 #else
 #define LOG(...) (void*)0
 #endif
