@@ -83,7 +83,7 @@ inline log& log_file::instance()
 inline log_file::log_file()
 {
     _file = fopen(FILE_LOG_NAME, "w+");
-    if (!_file)
+    if (_file == NULL)
     {
         char fn[30];
         time_t rawtime;
@@ -100,11 +100,14 @@ inline log_file::log_file()
 
 inline log_file::~log_file()
 {
-    fclose(_file);
+    if(_file) 
+        fclose(_file);
 }
 
 inline void log_file::printf(const char* format, ...)
 {
+    if (_file == NULL) 
+        return;
     va_list argptr;
     va_start(argptr, format);
     vfprintf(_file, format, argptr);
@@ -114,6 +117,8 @@ inline void log_file::printf(const char* format, ...)
 
 inline void log_file::dump(const char *buffer, size_t size)
 {
+    if (_file == NULL) 
+        return;
     fwrite(buffer, 1, size, _file);
     fflush(_file);
 }
@@ -162,14 +167,13 @@ inline void log_console::dump(const char *buffer, size_t size)
     
 }      // namespace iheader
 #else
-
 #if defined(_LOG) && defined(LOG)
-#ifdef _MSC_VER
-#pragma message ("*** LOG Need C++ Support")
-#else
-#warning "*** LOG Need C++ Support"
-#endif // _MSC_VER
+//#ifdef _MSC_VER
+//#pragma message ("*** LOG Need C++ Support")
+//#else
+//#warning "*** LOG Need C++ Support"
+//#endif // _MSC_VER
 #undef LOG
-#define LOG(...) (void*)0
+#define LOG printf
 #endif // defined(_LOG) && defined(LOG)
 #endif // #ifdef __cplusplus
