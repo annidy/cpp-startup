@@ -46,7 +46,9 @@ clock_t _UniqueClock_t<i>::var;
 #define BREAK_CHECK(L, R)  if((R) != (L)) break;
 #define RETURN_CHECK(L, R) if((R) != (L)) return;
 #define RETURN_CHECK1(L, R, R1) if((R) != (L)) return (R1);
+#define GOTO_CHECK(L, R, G) if((R) != (L)) goto G;
 
 #define BREAK_CHECK_NOT(L, R)  if((R) == (L)) break;
 #define RETURN_CHECK_NOT(L, R) if((R) == (L)) return;
 #define RETURN_CHECK_NOT1(L, R, R1) if((R) == (L)) return (R1);
+#define GOTO_CHECK_NOT1(L, R, G) if((R) == (L)) goto G;
