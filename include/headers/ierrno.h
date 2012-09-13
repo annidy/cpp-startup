@@ -25,6 +25,7 @@
 	}\
 	return (e);\
 	} while(0)
+#define return_errno            return_perror(errno)
 
 #define goto_error(e, label)	{ set_error(e); goto label; }
 #define break_error(e)			{ set_error(e); break; }
