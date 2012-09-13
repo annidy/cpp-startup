@@ -10,6 +10,7 @@
 #include <stdarg.h>
 #include <stdio.h>
 #include <time.h>
+#include <errno.h>
 #include "iconfig.h"
 
 #ifdef _LOG
@@ -43,6 +44,20 @@ private:
 protected:
 	log() {};
     LOG_INTERfACE ~log() {};
+    LOG_INTERfACE const char* time_prefix()
+    {
+        static char ptime[100];
+        struct tm* timeinfo;
+        time_t times;
+        time(&times);
+        timeinfo = localtime(&times);
+        timeinfo->tm_year += 1900;
+        sprintf(ptime, "[%d-%02d-%02d %02d:%02d:%02d] ", 
+                        timeinfo->tm_year, timeinfo->tm_mon, 
+                        timeinfo->tm_mday, timeinfo->tm_hour,
+                        timeinfo->tm_min, timeinfo->tm_sec);
+        return ptime;
+    }
 };
 
 #ifndef _LOG
@@ -54,7 +69,7 @@ inline log& log::instance()
 
 
 // -------------------------------------------------------------------------------------------
-class log_file : log 
+class log_file : public log 
 {
 public:
     void printf(const char *format, ...);
@@ -85,16 +100,23 @@ inline log_file::log_file()
     _file = fopen(FILE_LOG_NAME, "w+");
     if (_file == NULL)
     {
+        /*
         char fn[30];
         time_t rawtime;
         struct tm * timeinfo;
 
         time ( &rawtime );
         timeinfo = localtime ( &rawtime );
+        timeinfo->tm_year += 1900;
         sprintf(fn, "%04d%02d%02d%02d%02d%02d.log", timeinfo->tm_year, \
                 timeinfo->tm_mon, timeinfo->tm_mday, timeinfo->tm_hour, \
                 timeinfo->tm_min, timeinfo->tm_sec);
-        _file = fopen(fn, FILE_LOG_MODE);
+         */
+        _file = fopen(time_prefix(), FILE_LOG_MODE);
+    }
+    
+    if (_file == NULL) {
+        fprintf(stderr, "* fopen failed *\n");
     }
 }
 
@@ -110,6 +132,7 @@ inline void log_file::printf(const char* format, ...)
         return;
     va_list argptr;
     va_start(argptr, format);
+    fprintf(_file, time_prefix());
     vfprintf(_file, format, argptr);
     fflush(_file);
     va_end(argptr);
