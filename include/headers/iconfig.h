@@ -9,13 +9,13 @@
 #pragma once
 
 #define _LOG
-#define FILE_LOG_NAME "log"
 
-#define ENABLE_ASSERT
-#define ENABLE_ASSERT
-#define ENABLE_TRACE
-#define ENABLE_ASSERT_LEVEL
-#define ENABLE_CHECK
+#define FILE_LOG_TRUNC 1
+
+//#define ENABLE_ASSERT
+//#define ENABLE_TRACE
+//#define ENABLE_ASSERT_LEVEL
+//#define ENABLE_CHECK
 //#define ENABLE_DUMP
 
 #define ASSERT_LEVEL ASSERT_LEVEL_INFO

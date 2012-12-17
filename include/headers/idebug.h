@@ -101,7 +101,7 @@ inline T _check(T t, T c, char* FILE, long LINEN, char* LINE)
 #endif
 
 #ifdef ENABLE_TRACE
-#define CODE_TRACE LOG("TRACE: %s:%d\n", __FILE__, __LINE__);
+#define CODE_TRACE LOG("TRACE: %s:%s:%d\n", __FILE__, __FUNCTION__, __LINE__);
 #else
 #define CODE_TRACE 
 #endif
