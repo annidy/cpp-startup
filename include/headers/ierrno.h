@@ -17,15 +17,18 @@
 #define set_error(e)	errno = (e)
 #endif
 
-#define return_error(e)	set_errno(e), return (e)
+#define return_error(e)	 do { set_error(e); return (e); } while(0)
 #define return_perror(e) do {\
 	if (e) {\
 	set_error(e);\
 	LOG("ERROR: %s:%s, %s(%d)\n", __FILE__, __FUNCTION__, strerror(e), e);\
 	}\
 	return (e);\
-	}while(0)
+	} while(0)
+#define return_errno            return_perror(errno)
 
+#define goto_error(e, label)	{ set_error(e); goto label; }
+#define break_error(e)			{ set_error(e); break; }
 
 
 #define		ENO         0
@@ -73,4 +76,3 @@
 //#define	ENOLCK		39	/* No locks available (46 in Cyg?) */
 //#define	ENOSYS		40	/* Function not implemented (88 in Cyg?) */
 //#define	ENOTEMPTY	41	/* Directory not empty (90 in Cyg?) */
-

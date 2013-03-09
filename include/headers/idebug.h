@@ -27,19 +27,19 @@ LONG WINAPI MyUnhandledExceptionFilter(struct _EXCEPTION_POINTERS* ExceptionInfo
 
 
 #ifdef ENABLE_ASSERT
-#ifdef _MSC_VER
-#include <crtdbg.h>
-#define ASSERT(expr) _ASSERT_EXPR((expr), _CRT_WIDE(#expr))
-#else
-#include <unistd.h>
-#include <stdio.h>
-#define ASSERT(C) ((!!((C))) || (LOG("ASSERT: %s:%d %s\n", \
+#   ifdef _MSC_VER
+#       include <crtdbg.h>
+#       define ASSERT(expr) _ASSERT_EXPR((expr), _CRT_WIDE(#expr))
+#   else
+#       include <unistd.h>
+#       include <stdio.h>
+#       define ASSERT(C) ((!!((C))) || (LOG("ASSERT: %s:%d %s\n", \
 								__FILE__, __LINE__, #C), \
 								kill(getpid(), SIGINT)))
-#endif // WIN32
+#   endif // #ifdef _MSC_VER
 #else
-#define ASSERT(C) 0
-#endif
+#   define ASSERT(C) 0
+#endif // #ifdef _ENABLE_ASSERT
 
 #ifdef ENABLE_ASSERT_LEVEL
 #define ASSERT_LEVEL_CRITAL 30
@@ -101,7 +101,7 @@ inline T _check(T t, T c, char* FILE, long LINEN, char* LINE)
 #endif
 
 #ifdef ENABLE_TRACE
-#define CODE_TRACE LOG("TRACE: %s:%d\n", __FILE__, __LINE__);
+#define CODE_TRACE LOG("TRACE: %s:%s:%d\n", __FILE__, __FUNCTION__, __LINE__);
 #else
 #define CODE_TRACE 
 #endif
