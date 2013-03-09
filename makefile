@@ -18,16 +18,17 @@ CC := gcc
 
 all : idebug_test ierror_test iutil_test idebug_test_cpp
 
-iheader : include/iheader.o
+iheader : include/iheader.cpp
+	$(CPP) $(CPPFLAGS) -c $< -o $(MAKEROOT)/obj/test/iheader.o 
 
 ierror_test : test/ierror_test.o
 	$(CC) -o $(MAKEROOT)/obj/$@ $(MAKEROOT)/obj/$<
 
 idebug_test : test/idebug_test.o
-	$(CC) -o $(MAKEROOT)/obj/$@ $(MAKEROOT)/obj/$<
+	$(CPP) -o $(MAKEROOT)/obj/$@ $(MAKEROOT)/obj/$< $(MAKEROOT)/obj/test/iheader.o
 
-idebug_test_cpp : test/idebug_test_cpp.o
-	$(CPP) -o $(MAKEROOT)/obj/$@ $(MAKEROOT)/obj/$< $(MAKEROOT)/obj/include/iheader.o
+idebug_test_cpp : test/idebug_test_cpp.o iheader
+	$(CPP) -o $(MAKEROOT)/obj/$@ $(MAKEROOT)/obj/$< $(MAKEROOT)/obj/test/iheader.o
 
 iutil_test : test/iutil_test.o
 	$(CC) -o $(MAKEROOT)/obj/$@ $(MAKEROOT)/obj/$<

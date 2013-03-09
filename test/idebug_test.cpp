@@ -42,11 +42,13 @@ void test_c()
 
 int main()
 {
+	strcpy(iheader::log_file::log_name, "idebug_test.log");
 	printf("%s\n", TO_STRING(LOG("idebug_test\n")));
 	//log_console::instance().printf("idebug_test\n");
 	LOG("This is test\n");
 	TIME_IT(test_c());
 	TIME_IT(test_c());
+	// iheader::log_file::_instance->reopen("bad.log");
 	DLOG("Debug\n");
 	ILOG("Info\n");
 	ELOG("Error\n");

@@ -63,7 +63,7 @@ int main()
 	printf("Now, the errno = %d\n", errno);
 	test2(3);
 	printf("Now, the errno = %d\n", errno);
-	printf(TO_STRING(break_error(1, e1)));
+	printf(TO_STRING(break_error(1)));
 	printf("\n");
 	test3(1);
 	printf("Now, the errno = %d\n", errno);

@@ -8,9 +8,9 @@
  */
 #pragma once
 
-#ifdef WIN32
+#if defined(WIN32)
 #include <windows.h>
-#else
+#elif defined(MAC)
 #import <CoreFoundation/CoreFoundation.h>
 #include <unistd.h>
 #endif
@@ -31,7 +31,7 @@ namespace iheader {
     inline std::string get_module_path()
     {
         char module_path[MAX_PATH] = {0};
-#ifdef WIN32
+#if defined(WIN32)
         if( GetModuleFileNameA( NULL, module_path, MAX_PATH ) )
         {
             for (int i = strlen(module_path); i > 0; i--)
@@ -43,7 +43,7 @@ namespace iheader {
                 }
             }
         }
-#else
+#elif defined(MAC)
         CFBundleRef bd = CFBundleGetMainBundle();
         CFURLRef url = CFBundleCopyBundleURL(bd);
         CFStringRef srf = CFURLCopyFileSystemPath(url, kCFURLPOSIXPathStyle);

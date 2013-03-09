@@ -23,7 +23,7 @@
 //#define FILE_LOG_MODE "w+"
 //#else
 #define FILE_LOG_MODE "a+"
-#define FILE_LOG_NAME "MobileGo.log"
+#define FILE_LOG_NAME "cpp-startup.log"
 // -----------------------------------------------------------------------------
 #ifdef __cplusplus
 #include "mac2win.hpp"
@@ -77,6 +77,7 @@ namespace iheader
         static log_file& instance();
         
         int reopen(const char* path);
+        static char log_name[128];
     private:
         FILE *_file;
         static log_file *_instance;
@@ -98,7 +99,8 @@ namespace iheader
     
     inline log_file::log_file()
     {
-        std::string file_path = get_module_path() + FILE_LOG_NAME;
+        std::string file_path = get_module_path();
+        file_path.append(log_name[0]?log_name:FILE_LOG_NAME);
         _file = fopen(file_path.c_str(), FILE_LOG_MODE);
         if (_file == NULL)
         {
