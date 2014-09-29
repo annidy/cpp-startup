@@ -1,9 +1,12 @@
 #pragma once
 
-#if defined(ENABLE_DUMP) && defined(_MSC_VER)
+#if defined(_MSC_VER)
 #include <Windows.h>
-#include <dbghelp.h>
 #include <tchar.h>
+#endif
+
+#if defined(ENABLE_DUMP)
+#include <dbghelp.h>
 #pragma auto_inline (off)
 #pragma comment( lib, "DbgHelp" )
 /* cause of i can't write cpp, you must put this macro in your file */
@@ -25,6 +28,22 @@ LONG WINAPI MyUnhandledExceptionFilter(struct _EXCEPTION_POINTERS* ExceptionInfo
 #define REGIST_MINIDUMP ((void*)0)();
 #endif
 
+#if defined(ENABLE_CONSOLE)
+#define REDICT_STDIO_TO_CONSOLE \
+do {\
+    int hConHandle;\
+    long lStdHandle;\
+    FILE *fp;\
+    AllocConsole();\
+    lStdHandle = (long)GetStdHandle(STD_OUTPUT_HANDLE);\
+    hConHandle = _open_osfhandle(lStdHandle, _O_TEXT);\
+    fp = _fdopen( hConHandle, "w" );\
+    *stdout = *fp;\
+    setvbuf( stdout, NULL, _IONBF, 0 );\
+} while(0)
+#else
+#define REDICT_STDIO_TO_CONSOLE 0
+#endif
 
 #ifdef ENABLE_ASSERT
 #   ifdef _MSC_VER

@@ -8,10 +8,7 @@
 */
 #pragma once
 
-#define _LOG
-
-#define FILE_LOG_TRUNC 1
-
+////////////////////////////// Level Assert ///////////////////////////////
 //#define ENABLE_ASSERT
 //#define ENABLE_TRACE
 //#define ENABLE_ASSERT_LEVEL
@@ -19,9 +16,15 @@
 //#define ENABLE_DUMP
 
 #define ASSERT_LEVEL ASSERT_LEVEL_INFO
-#define _LOG_DEBUG
 
 /////////////////////////////// Level Log ////////////////////////////////
+#if	defined(_LOG_DEBUG) || defined(_LOG_INFO) || defined(_LOG_ERROR)
+#define _LOG
+#define LOG_SET(a,b) iheader::log_file::instance().reopen((a), (b))
+#else
+#define LOG_SET(a,b) 0
+#endif
+
 #if defined(_LOG)
 #define LOG(...) (iheader::log_console::instance().printf(__VA_ARGS__),\
 				  iheader::log_file::instance().printf(__VA_ARGS__))

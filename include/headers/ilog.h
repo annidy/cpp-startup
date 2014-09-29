@@ -19,15 +19,9 @@
 #define LOG_INTERfACE
 #endif
 
-//#ifdef FILE_LOG_TRUNC
-//#define FILE_LOG_MODE "w+"
-//#else
-#define FILE_LOG_MODE "a+"
-#define FILE_LOG_NAME "cpp-startup.log"
-// -----------------------------------------------------------------------------
 #ifdef __cplusplus
-#include "mac2win.hpp"
-
+#include <algorithm>
+ 
 namespace iheader
 {
     
@@ -76,8 +70,7 @@ namespace iheader
         void dump(const char *buffer, size_t size);
         static log_file& instance();
         
-        int reopen(const char* path);
-        static char log_name[128];
+        int reopen(const char *path, const char *mode);
     private:
         FILE *_file;
         static log_file *_instance;
@@ -99,30 +92,21 @@ namespace iheader
     
     inline log_file::log_file()
     {
-        std::string file_path = get_module_path();
-        file_path.append(log_name[0]?log_name:FILE_LOG_NAME);
-        _file = fopen(file_path.c_str(), FILE_LOG_MODE);
-        if (_file == NULL)
-        {
-            _file = fopen(time_prefix(), FILE_LOG_MODE);
-        }
-        
-        if (_file == NULL) 
-        {
-            fprintf(stderr, "* fopen failed *\n");
-        }
+        _file = NULL;
     }
     
     inline log_file::~log_file()
     {
-        if(_file) 
+        if(_file) {
             fclose(_file);
+        }
     }
     
     inline void log_file::printf(const char* format, ...)
     {
-        if (_file == NULL) 
+        if (_file == NULL) {
             return;
+        }
         va_list argptr;
         va_start(argptr, format);
         fprintf(_file, "%s", time_prefix());
@@ -133,17 +117,17 @@ namespace iheader
     
     inline void log_file::dump(const char *buffer, size_t size)
     {
-        if (_file == NULL) 
+        if (_file == NULL) {
             return;
+        }
         fwrite(buffer, 1, size, _file);
         fflush(_file);
     }
     
-    inline int log_file::reopen(const char *path)
+    inline int log_file::reopen(const char *path, const char *mode = "a+")
     {
-        FILE* fp = fopen(path, FILE_LOG_MODE);
-        if (fp)
-        {
+        FILE* fp = fopen(path, mode);
+        if (fp) {
             std::swap(fp, _file);
             if (fp)
                 fclose(fp);
