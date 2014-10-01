@@ -20,15 +20,14 @@
 /////////////////////////////// Level Log ////////////////////////////////
 #if	defined(_LOG_DEBUG) || defined(_LOG_INFO) || defined(_LOG_ERROR)
 #define _LOG
-#define LOG_SET(a,b) iheader::log_file::instance().reopen((a), (b))
-#else
-#define LOG_SET(a,b) 0
 #endif
 
 #if defined(_LOG)
+#define LOG_SET(a,b) iheader::log_file::instance().reopen((a), (b))
 #define LOG(...) (iheader::log_console::instance().printf(__VA_ARGS__),\
 				  iheader::log_file::instance().printf(__VA_ARGS__))
 #else
+#define LOG_SET(a,b) 0
 #define LOG(...) (void*)0
 #endif
 

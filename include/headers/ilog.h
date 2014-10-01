@@ -166,15 +166,15 @@ namespace iheader
     {
         va_list argptr;
         va_start(argptr, format);
-        vfprintf(stderr, format, argptr);
-        fflush(stderr);
+        vfprintf(stdout, format, argptr);
+        fflush(stdout);
         va_end(argptr);
     }
     
     inline void log_console::dump(const char *buffer, size_t size)
     {
-        fwrite(buffer, 1, size, stderr);
-        fflush(stderr);
+        fwrite(buffer, 1, size, stdout);
+        fflush(stdout);
     }
     
 }      // namespace iheader
